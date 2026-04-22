@@ -132,5 +132,19 @@ npm run ci:local
 - AuthN/AuthZ (JWT/OAuth2), multi-user и разграничение доступа к задачам.
 - Перенос idempotency-key storage в Redis/PostgreSQL.
 - Production live-eval + regression gates в CI/CD на реальных LLM-вызовах.
+- Улучшение LLM-контура:
+  - prompt versioning (версионирование промптов и rollback),
+  - A/B тесты промптов по сценариям US-3..US-6,
+  - retrieval-augmented prompts (подмешивание релевантного контекста задач/истории),
+  - response streaming для долгих AI-операций.
+- Улучшение prompt engineering:
+  - отдельные prompt-профили по типам задач (работа/личное/учеба),
+  - автоматические prompt-eval тесты в CI с quality/cost метриками,
+  - fallback-стратегии при низкой уверенности модели.
+- Интеграция с мессенджерами (Telegram / Max):
+  - бот-команды для CRUD (`/new`, `/list`, `/done`, `/priority`),
+  - AI-команды (`/categorize`, `/decompose`, `/workload`),
+  - webhook/long-polling gateway + привязка чата к пользователю,
+  - уведомления о дедлайнах и ежедневная сводка в мессенджер.
 - Расширенная observability: метрики, алерты, трассировка AI pipeline.
 - UI улучшения: канбан, календарь, пакетные операции, audit log/история изменений.
