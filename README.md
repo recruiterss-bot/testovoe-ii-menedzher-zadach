@@ -123,10 +123,11 @@ npm run ci:local
 
 ## 5. Известные проблемы, ограничения или компромиссы
 - Приложение в формате demo: single-user, без auth/roles/tenant isolation.
-- Idempotency store in-memory: после рестарта backend ключи не сохраняются.
-- Eval скрипт (`scripts/eval-placeholder.mjs`) синтетический; это не production live-eval по реальным запросам.
-- Не реализованы streaming-ответы LLM и асинхронная очередь задач.
-- Frontend build использует `next build --webpack` как обход бага Turbopack на unicode/спецсимволах в пути проекта.
+- Отсутствует production-контур эксплуатации: нет CI/CD окружений, секрет-менеджмента, централизованного мониторинга и SLA-процессов.
+- Хранилище idempotency in-memory: после рестарта backend ключи не сохраняются (для production нужен Redis/PostgreSQL store).
+- AI-оценка в текущей версии упрощенная: `scripts/eval-placeholder.mjs` дает synthetic-проверку, а не live-eval на реальных пользовательских запросах.
+- AI-функции реализованы в синхронном request/response формате: нет streaming-ответов и фоновой очереди для долгих операций.
+- Нет enterprise-безопасности и governance: отсутствуют audit trail действий пользователей, RBAC/policy enforcement и лимиты по организациям/командам.
 
 ## 6. Список функций, которые кандидат добавил бы при наличии дополнительного времени
 - AuthN/AuthZ (JWT/OAuth2), multi-user и разграничение доступа к задачам.
