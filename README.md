@@ -145,7 +145,44 @@ npm run ci:local
 - Интеграция с мессенджерами (Telegram / Max):
   - бот-команды для CRUD (`/new`, `/list`, `/done`, `/priority`),
   - AI-команды (`/categorize`, `/decompose`, `/workload`),
-  - webhook/long-polling gateway + привязка чата к пользователю,
-  - уведомления о дедлайнах и ежедневная сводка в мессенджер.
+- webhook/long-polling gateway + привязка чата к пользователю,
+- уведомления о дедлайнах и ежедневная сводка в мессенджер.
 - Расширенная observability: метрики, алерты, трассировка AI pipeline.
 - UI улучшения: канбан, календарь, пакетные операции, audit log/история изменений.
+
+## 7. Production Readiness (дополнительно)
+
+### Инфраструктура
+- [ ] Есть отдельные окружения: `dev`, `staging`, `prod`.
+- [ ] Все сервисы запускаются контейнерами (backend/frontend/db).
+- [ ] Настроен reverse proxy (Nginx/Caddy) и HTTPS/TLS.
+
+### Безопасность
+- [ ] Секреты не хранятся в репозитории (используется secret manager / env в CI).
+- [ ] Настроены CORS, security headers, rate limiting.
+- [ ] Включен dependency/container scanning.
+
+### База данных
+- [ ] Миграции выполняются автоматически в релиз-пайплайне.
+- [ ] Настроены регулярные backup’ы PostgreSQL.
+- [ ] Проверена процедура восстановления (restore test).
+
+### Приложение
+- [ ] Реализованы auth + RBAC (не single-user).
+- [ ] Idempotency storage вынесен в Redis/PostgreSQL (не in-memory).
+- [ ] Долгие AI-операции вынесены в очередь (worker).
+
+### AI-контур
+- [ ] Prompt versioning + rollback стратегия.
+- [ ] Live-eval (не synthetic placeholder) на реальных кейсах.
+- [ ] Cost/quality guardrails и алерты по деградации.
+
+### Наблюдаемость
+- [ ] Централизованные логи (с requestId/correlationId).
+- [ ] Метрики и дашборды (latency/error rate/cost).
+- [ ] Alerting по SLO (5xx, timeout, AI unavailable).
+
+### Релизы и эксплуатация
+- [ ] CI/CD: lint + tests + build + deploy + smoke tests.
+- [ ] Есть rollback-процедура (версия приложения + миграции).
+- [ ] Описан runbook инцидентов.
